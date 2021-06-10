@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>scavenger_interface</name>
+  <version>0.0.1</version>
+  <description>The scavenger_interface package</description>
+
+  <maintainer email="maxwell@cs.utexas.edu">Maxwell Svetlik</maintainer>
+
+
+  <license>MIT</license>
+
+
+  <author email="maxwell@cs.utexas.edu">Maxwell Svetlik</author> -->
+
+
+  <depend>roscpp</depend>
+  <build_depend>message_generation</build_depend>
+  <!-- Use build_export_depend for packages you need in order to build against this package: -->
+  <!--   <build_export_depend>message_generation</build_export_depend> -->
+  <buildtool_depend>catkin</buildtool_depend>
+
+
+  <export>
+  </export>
+</package>
