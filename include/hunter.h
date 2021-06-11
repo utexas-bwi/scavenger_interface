@@ -11,14 +11,16 @@
 #pragma once
 #include <scavenger_hunt_msgs/Hunt.h>
 #include <scavenger_hunt_msgs/Task.h>
+#include <sensor_msgs/Image.h>
 
 class Hunter {
 public:
 	/*
 	 * General perform tasks 
 	 */
-	virtual void performHunt() const = 0;
-	virtual void performTask() const = 0;
+	virtual void prepareHunt(scavenger_hunt_msgs::Hunt) const = 0;
+	virtual sensor_msgs::Image performImageTask(scavenger_hunt_msgs::Task) const = 0;
+	virtual std::string performVideoTask(scavenger_hunt_msgs::Task) const = 0;
 
 	/*
 	 * Find an object

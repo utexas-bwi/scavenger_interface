@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.0.2)
 project(scavenger_interface)
 add_compile_options(-std=c++11)
 
-find_package(catkin REQUIRED COMPONENTS roscpp scavenger_hunt_msgs sensor_msgs )
+find_package(catkin REQUIRED COMPONENTS roscpp scavenger_hunt_msgs sensor_msgs darknet_ros_msgs)
 
 catkin_package()
 

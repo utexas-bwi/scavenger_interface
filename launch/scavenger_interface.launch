@@ -1,8 +1,10 @@
 <launch>
    <!-- name of the hunt to execute -->
    <arg name="hunt_name" default=""/>
+
    <!-- RGB image topic for image tasks -->
    <arg name="image_topic" default=""/>
+
    <!-- topic for image detection: yolo, etc -->
    <arg name="image_detection_topic" default=""/>
 
