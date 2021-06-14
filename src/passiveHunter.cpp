@@ -17,6 +17,7 @@
 #include <string>
 
 #include "passive_hunter.h"
+#include "scavenger_constants.h"
 
 PassiveHunter::PassiveHunter(ros::NodeHandle nh, std::string yoloBBTopic, std::string rgbImageTopic) : Hunter(){
 	_nh = nh;
@@ -42,6 +43,7 @@ sensor_msgs::Image PassiveHunter::performImageTask(scavenger_hunt_msgs::Task tas
 	_imageClasses.clear();
 	loadClasses(task);
 	ros::Rate r(10);
+	ROS_INFO("Performing an Image task");
 	while(ros::ok()){
 		for(darknet_ros_msgs::BoundingBox bb : _bbMsg.bounding_boxes){
 			if (std::find(_imageClasses.begin(), _imageClasses.end(), bb.Class) != _imageClasses.end()){
@@ -68,13 +70,13 @@ std::string PassiveHunter::performVideoTask(scavenger_hunt_msgs::Task task) cons
 // Since this Hunter is passive, collect all class labels that we might be looking for
 // across all tasks to achieve in parallel
 void PassiveHunter::loadClasses(scavenger_hunt_msgs::Task task) const {
-	if(task.proof_format == std::to_string(scavenger_hunt_msgs::Proof::TYPE_IMAGE)){
+	if(task.proof_format == IMAGE){
 		for(scavenger_hunt_msgs::Parameter p : task.parameters)
-			_imageClasses.push_back(p.name);
+			_imageClasses.push_back(p.value);
 	}
-	else if(task.proof_format == std::to_string(scavenger_hunt_msgs::Proof::TYPE_VIDEO)){
+	else if(task.proof_format == VIDEO){
 		for(scavenger_hunt_msgs::Parameter p : task.parameters)
-			_videoClasses.push_back(p.name);
+			_videoClasses.push_back(p.value);
 	}
 }
 

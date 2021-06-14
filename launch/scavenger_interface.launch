@@ -1,19 +1,29 @@
 <launch>
+  <env name="ROSCONSOLE_CONFIG_FILE" value="$(find scavenger_interface)/rosconsole.conf"/>
+
    <!-- name of the hunt to execute -->
    <arg name="hunt_name" default=""/>
 
    <!-- RGB image topic for image tasks -->
-   <arg name="image_topic" default=""/>
+   <arg name="image_topic" default="/darknet_ros/detection_image"/>
 
    <!-- topic for image detection: yolo, etc -->
-   <arg name="image_detection_topic" default=""/>
+   <arg name="image_detection_topic" default="/darknet_ros/bounding_boxes"/>
 
    <!-- Service end points exposed by scavenger hunt API -->
    <arg name="get_hunt_srv" default="/scavenger_hunt/get_hunt"/>
    <arg name="send_proof_srv" default="/scavenger_hunt/send_proof"/>
    <arg name="get_proof_srv" default="/scavenger_hunt/get_proof_status"/>
 
-   <node name="huntLauncher" type="huntLauncher" pkg="scavenger_interface">
+   <include file="$(find scavenger_hunt)/launch/scavenger_hunt.launch"/>
+
+   <node name="huntLauncher" type="huntLauncher" pkg="scavenger_interface" output="screen">
+	<param name="hunt_name" value="$(arg hunt_name)"/>
+	<param name="image_topic" value="$(arg image_topic)"/>
+	<param name="image_detection_topic" value="$(arg image_detection_topic)"/>
+	<param name="get_hunt_srv" value="$(arg get_hunt_srv)"/>
+	<param name="send_proof_srv" value="$(arg send_proof_srv)"/>
+	<param name="get_proof_srv" value="$(arg get_proof_srv)"/>
 	<param name="hunt_name" value="$(arg hunt_name)"/>
    </node>
 </launch>

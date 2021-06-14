@@ -15,12 +15,13 @@
 #include <scavenger_hunt_msgs/Proof.h>
 
 #include "passive_hunter.h"
+#include "scavenger_constants.h"
 #include "scavenger_ros_interface.h"
 
 int main(int argc, char** argv){
 
 	ros::init(argc, argv, "scavenger_hunter");
-	ros::NodeHandle nh;
+	ros::NodeHandle nh("~");
 	ros::Rate loop_rate(10);
 
 	// Fetch all required information on the parameter server
@@ -49,13 +50,13 @@ int main(int argc, char** argv){
 	// iterate over tasks and sequentially submit to Hunter
 	for( scavenger_hunt_msgs::Task t : hunt.tasks){
 		bool success = true;
-		if(t.proof_format == std::to_string(scavenger_hunt_msgs::Proof::TYPE_IMAGE)){
+		if(t.proof_format == IMAGE){
 			ros::Time start = ros::Time::now();
 			sensor_msgs::Image imageProof = ph->performImageTask(t);
 			ROS_INFO("Proof has been found. Attempting to submit.");
 			success = sri->uploadProof(t,imageProof,start);
 		}
-		else if(t.proof_format == std::to_string(scavenger_hunt_msgs::Proof::TYPE_VIDEO)){
+		else if(t.proof_format == VIDEO){
 			ros::Time start = ros::Time::now();
 			std::string proofPath = ph->performVideoTask(t);
 			ROS_INFO("Proof has been found. Attempting to submit.");
@@ -73,5 +74,6 @@ int main(int argc, char** argv){
 
 	}
 
+	ROS_INFO("Completed all tasks associated with Hunt. Hunt complete!");
 	return 0;
 }
