@@ -8,9 +8,9 @@ catkin_package()
 
 include_directories(include ${catkin_INCLUDE_DIRS})
 
-add_library(ScavengerRosInterface src/scavengerRosInterface.cpp)
-add_library(PassiveHunter src/passiveHunter.cpp)
+add_library(scavenger_ros_interface src/scavenger_ros_interface.cpp)
+add_library(passive_hunter src/passive_hunter.cpp)
 
-add_executable(huntLauncher src/hunterNode.cpp)
-add_dependencies(huntLauncher PassiveHunter ScavengerRosInterface)
-target_link_libraries(huntLauncher ${catkin_LIBRARIES} ScavengerRosInterface PassiveHunter)
+add_executable(hunter_launcher src/hunter_launcher.cpp)
+add_dependencies(hunter_launcher passive_hunter scavenger_ros_interface)
+target_link_libraries(hunter_launcher ${catkin_LIBRARIES} scavenger_ros_interface passive_hunter)

@@ -18,23 +18,23 @@ public:
 	/*
 	 * General perform tasks 
 	 */
-	virtual void prepareHunt(scavenger_hunt_msgs::Hunt) const = 0;
-	virtual sensor_msgs::Image performImageTask(scavenger_hunt_msgs::Task) const = 0;
-	virtual std::string performVideoTask(scavenger_hunt_msgs::Task) const = 0;
+	virtual void prepare_hunt(scavenger_hunt_msgs::Hunt) const = 0;
+	virtual sensor_msgs::Image perform_image_task(scavenger_hunt_msgs::Task) const = 0;
+	virtual std::string perform_video_task(scavenger_hunt_msgs::Task) const = 0;
 
 	/*
 	 * Find an object
 	 */
-	virtual void performFindTask(){}
+	virtual void perform_find_task(){}
 
 	/*
 	 * Go to a location
 	 */
-	virtual void performLocationTask(){}
+	virtual void perform_location_task(){}
 
 	/*
 	 * Travel more than a certain distance
 	 */
-	virtual void performTravelTask(){}
+	virtual void perform_travel_task(){}
 
 };

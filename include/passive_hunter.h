@@ -6,27 +6,27 @@
 class PassiveHunter : public Hunter {
 
 private:
-	darknet_ros_msgs::BoundingBoxes _bbMsg;
-	mutable std::vector<std::string> _imageClasses;
-	mutable std::vector<std::string> _videoClasses;
-	ros::Subscriber _imageDetectionSub;
+	darknet_ros_msgs::BoundingBoxes _bb_msg;
+	mutable std::vector<std::string> _image_classes;
+	mutable std::vector<std::string> _video_classes;
+	ros::Subscriber _image_detection_sub;
 	ros::NodeHandle _nh;
-	sensor_msgs::Image _rgbImageMsg;
-	ros::Subscriber _sensorImageSub;
-	mutable scavenger_hunt_msgs::Hunt _targetHunt;
+	sensor_msgs::Image _rgb_image_msg;
+	ros::Subscriber _sensor_image_sub;
+	mutable scavenger_hunt_msgs::Hunt _target_hunt;
 public:
-	PassiveHunter(ros::NodeHandle nh, std::string yoloBBTopic, std::string rgbImageTopic);	
-	void prepareHunt(scavenger_hunt_msgs::Hunt hunt) const;
-	sensor_msgs::Image performImageTask(scavenger_hunt_msgs::Task) const;
-	std::string performVideoTask(scavenger_hunt_msgs::Task) const;
-	void performFindTask(){}
-	void performLocationTask(){}
-	void performTravelTask(){}
+	PassiveHunter(ros::NodeHandle nh, std::string yolo_bb_topic, std::string rgb_image_topic);	
+	void prepare_hunt(scavenger_hunt_msgs::Hunt hunt) const;
+	sensor_msgs::Image perform_image_task(scavenger_hunt_msgs::Task) const;
+	std::string perform_video_task(scavenger_hunt_msgs::Task) const;
+	void perform_find_task(){}
+	void perform_location_task(){}
+	void perform_travel_task(){}
 
 	/*
 	 * Non abstract, Hunter-specific functions
 	 */
-	void loadClasses(scavenger_hunt_msgs::Task task) const;
-	void rgbImageCb(sensor_msgs::Image msg);
-	void yoloBBCb(darknet_ros_msgs::BoundingBoxes msg);
+	void load_classes(scavenger_hunt_msgs::Task task) const;
+	void rgb_image_cb(sensor_msgs::Image msg);
+	void yolo_bb_cb(darknet_ros_msgs::BoundingBoxes msg);
 };  
