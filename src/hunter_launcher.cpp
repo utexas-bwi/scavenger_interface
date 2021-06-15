@@ -25,42 +25,42 @@ int main(int argc, char** argv){
 	ros::Rate loop_rate(10);
 
 	// Fetch all required information on the parameter server
-	std::string getHuntSrv, sendProofSrv, getProofSrv, huntName, imageDetectionTopic, rgbImageTopic;
+	std::string get_hunt_srv, send_proof_srv, get_proof_srv, hunt_name, image_detection_topic, rgb_image_topic;
 		
-	nh.getParam("get_hunt_srv", getHuntSrv);
-	nh.getParam("send_proof_srv", sendProofSrv);
-	nh.getParam("get_proof_srv", getProofSrv);
-	nh.getParam("hunt_name", huntName);
-	nh.getParam("image_detection_topic", imageDetectionTopic);
-	nh.getParam("image_topic", rgbImageTopic);
+	nh.getParam("get_hunt_srv", get_hunt_srv);
+	nh.getParam("send_proof_srv", send_proof_srv);
+	nh.getParam("get_proof_srv", get_proof_srv);
+	nh.getParam("hunt_name", hunt_name);
+	nh.getParam("image_detection_topic", image_detection_topic);
+	nh.getParam("image_topic", rgb_image_topic);
 
-	ScavengerRosInterface* sri = new ScavengerRosInterface(nh, getHuntSrv, sendProofSrv, getProofSrv);
+	ScavengerRosInterface* sri = new ScavengerRosInterface(nh, get_hunt_srv, send_proof_srv, get_proof_srv);
 
 	// fetch the hunt and exit if it's not found
-	scavenger_hunt_msgs::Hunt hunt = sri->getHunt(huntName);
+	scavenger_hunt_msgs::Hunt hunt = sri->get_hunt(hunt_name);
 	if( hunt == scavenger_hunt_msgs::Hunt()){
-		ROS_ERROR("Scavenger hunt with name: %s  was not retreived from the scavenger server. Quitting.", huntName.c_str());
+		ROS_ERROR("Scavenger hunt with name: %s  was not retreived from the scavenger server. Quitting.", hunt_name.c_str());
 		return -1;
 	}
 
-	PassiveHunter* ph = new PassiveHunter(nh, imageDetectionTopic, rgbImageTopic);
+	PassiveHunter* ph = new PassiveHunter(nh, image_detection_topic, rgb_image_topic);
 	
-	ph->prepareHunt(hunt);
+	ph->prepare_hunt(hunt);
 	
 	// iterate over tasks and sequentially submit to Hunter
 	for( scavenger_hunt_msgs::Task t : hunt.tasks){
 		bool success = true;
 		if(t.proof_format == IMAGE){
 			ros::Time start = ros::Time::now();
-			sensor_msgs::Image imageProof = ph->performImageTask(t);
+			sensor_msgs::Image image_proof = ph->perform_image_task(t);
 			ROS_INFO("Proof has been found. Attempting to submit.");
-			success = sri->uploadProof(t,imageProof,start);
+			success = sri->upload_proof(t,image_proof,start);
 		}
 		else if(t.proof_format == VIDEO){
 			ros::Time start = ros::Time::now();
-			std::string proofPath = ph->performVideoTask(t);
+			std::string proof_path = ph->perform_video_task(t);
 			ROS_INFO("Proof has been found. Attempting to submit.");
-			success = sri->uploadProof(t,proofPath,start);
+			success = sri->upload_proof(t,proof_path,start);
 		}
 		else{
 			ROS_WARN("Task proof format not known or unsupported. Skipping...");

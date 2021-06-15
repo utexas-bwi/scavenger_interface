@@ -17,28 +17,28 @@
 
 class ScavengerRosInterface {
 	private: 
-		bool _isOk;
+		bool _is_ok;
 		ros::NodeHandle _nh;
-		ros::ServiceClient _getHuntClient;
-		ros::ServiceClient _getStatusClient;
-		ros::ServiceClient _sendProofClient;
+		ros::ServiceClient _get_hunt_client;
+		ros::ServiceClient _get_status_client;
+		ros::ServiceClient _send_proof_client;
 
-		unsigned char getHuntStatus(unsigned long proofId);
-		bool fileAccessible(std::string filePath){
+		unsigned char get_hunt_status(unsigned long proof_id);
+		bool file_accessible(std::string file_path){
 			struct stat buffer;
-  			return (stat (filePath.c_str(), &buffer) == 0);
+  			return (stat (file_path.c_str(), &buffer) == 0);
 		}
 	public:
 		ScavengerRosInterface(ros::NodeHandle nh, 
-				std::string getHuntSrv="/scavenger_hunt/get_hunt", 
-				std::string sendProofSrv="/scavenger_hunt/send_proof", 
-				std::string getProofSrv="/scavenger_hunt/get_proof_status");
-		scavenger_hunt_msgs::Hunt getHunt(std::string huntName);
-		std::vector<scavenger_hunt_msgs::Task> getTasks(std::string huntName);
-		bool isHuntValidated(unsigned long proofId);
-		bool isHuntCorrect(unsigned long proofId);
-		bool isHuntIncorrect(unsigned long proofId);
-		bool isOk();
-		bool uploadProof(scavenger_hunt_msgs::Task task, sensor_msgs::Image image, ros::Time startTime);
-		bool uploadProof(scavenger_hunt_msgs::Task task, std::string filePath, ros::Time startTime);
+				std::string get_hunt_srv="/scavenger_hunt/get_hunt", 
+				std::string send_proof_srv="/scavenger_hunt/send_proof", 
+				std::string get_proof_srv="/scavenger_hunt/get_proof_status");
+		scavenger_hunt_msgs::Hunt get_hunt(std::string hunt_name);
+		std::vector<scavenger_hunt_msgs::Task> get_tasks(std::string hunt_name);
+		bool is_hunt_validated(unsigned long proof_id);
+		bool is_hunt_correct(unsigned long proof_id);
+		bool is_hunt_incorrect(unsigned long proof_id);
+		bool is_ok();
+		bool upload_proof(scavenger_hunt_msgs::Task task, sensor_msgs::Image image, ros::Time start_time);
+		bool upload_proof(scavenger_hunt_msgs::Task task, std::string file_path, ros::Time start_time);
 };
