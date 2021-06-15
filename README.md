@@ -39,7 +39,7 @@ This package contains the following primary components:
 - `hunter_launcher` : this is the launchpad for a scavenger Hunter. It utilizes the `hunter.h` form to query a Hunter in a generic way.
 
 ### Making Changes
-Creating your own Hunter is as simple as creating a new class that implements the `hunter.h` abstract methods, and changing the type of Hunter that gets created in `hunterLauncher`
+Creating your own Hunter is as simple as creating a new class that implements the `hunter.h` abstract methods, and changing the type of Hunter that gets created in `hunter_launcher`
 
 Feel free to create new launch files as appropriate.
 
