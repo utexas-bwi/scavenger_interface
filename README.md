@@ -18,6 +18,8 @@ Building should be as simple as invoking catkin tools in the root of your worksp
 ### Pre-running
 Follow the instructions on the [scavenger_hunt_api README](https://github.com/utexas-bwi/scavenger_hunt_api/blob/master/README.md) for creating an account, and changing the config file with your credentials.
 
+Change the perception topics in `scavenger_interface.launch` if necessary. The `image_topic` and `image_detection_topic` should be the topics of an RGB image stream from a camera, and a image recognition stream, respectively. Currently they're configured for the default values for [darknet_ros](https://github.com/leggedrobotics/darknet_ros).
+
 ### Launching a Passive Hunter
 To run, you'll need to bring up your robot and perception systems as usual. This may be base drivers & YOLO, etc.
 
@@ -25,9 +27,9 @@ E.g. `$ roslaunch darknet_ros darknet_ros.launch`
 
 Then bring up the passive hunter launch file: 
 
-`$ roslaunch scavenger_interface scavenger_interface.launch`
+`$ roslaunch scavenger_interface scavenger_interface.launch hunt_name:="My Hunt"`
 
-
+Where `hunt_name` should be specified by you.
 By default the `hunter_launcher` is configured to bring up a Passive Hunter.
 
 ## Code Overview
