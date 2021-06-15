@@ -16,7 +16,7 @@ Building should be as simple as invoking catkin tools in the root of your worksp
 
 ## Running
 ### Pre-running
-Follow the instructions on the scavenger_hunt_api README for creating an account, and changing the config file with your credentials.
+Follow the instructions on the [scavenger_hunt_api README](https://github.com/utexas-bwi/scavenger_hunt_api/blob/master/README.md) for creating an account, and changing the config file with your credentials.
 
 ### Launching a Passive Hunter
 To run, you'll need to bring up your robot and perception systems as usual. This may be base drivers & YOLO, etc.
