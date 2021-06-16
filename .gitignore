@@ -1,3 +1,6 @@
+img_tmp/*.jpg
+img_tmp/*.png
+img_tmp/*.mp4
 devel/
 logs/
 build/

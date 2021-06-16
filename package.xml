@@ -12,14 +12,20 @@
 
   <author email="maxwell@cs.utexas.edu">Maxwell Svetlik</author> -->
 
-
+  <depend>OpenCV</depend>
   <depend>roscpp</depend>
+  <build_depend>cv_bridge</build_depend>
   <build_depend>darknet_ros_msgs</build_depend>
   <build_depend>sensor_msgs</build_depend>
   <build_depend>scavenger_hunt_msgs</build_depend>
   <build_depend>message_generation</build_depend>
-  <!-- Use build_export_depend for packages you need in order to build against this package: -->
-  <!--   <build_export_depend>message_generation</build_export_depend> -->
+  <build_depend>roslib</build_depend>
+
+  <exec_depend>ffmpeg</exec_depend>
+  <exec_depend>libavcodec-dev</exec_depend>
+  <exec_depend>libavformat-dev</exec_depend>
+  <exec_depend>libavutil-dev</exec_depend>
+  <exec_depend>libswscale-dev</exec_depend>
   <buildtool_depend>catkin</buildtool_depend>
 
 

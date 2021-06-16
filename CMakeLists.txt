@@ -3,7 +3,7 @@ project(scavenger_interface)
 add_compile_options(-std=c++11)
 
 find_package(OpenCV 3 REQUIRED COMPONENTS)
-find_package(catkin REQUIRED COMPONENTS cv_bridge roscpp scavenger_hunt_msgs sensor_msgs darknet_ros_msgs)
+find_package(catkin REQUIRED COMPONENTS cv_bridge roscpp roslib scavenger_hunt_msgs sensor_msgs darknet_ros_msgs)
 
 catkin_package()
 
