@@ -1,4 +1,7 @@
+#include <cv_bridge/cv_bridge.h>
 #include <darknet_ros_msgs/BoundingBoxes.h>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/opencv.hpp>
 #include <ros/ros.h>
 
 #include "hunter.h"
@@ -28,5 +31,6 @@ public:
 	 */
 	void load_classes(scavenger_hunt_msgs::Task task) const;
 	void rgb_image_cb(sensor_msgs::Image msg);
+	void write_image(sensor_msgs::Image image, std::string path) const;
 	void yolo_bb_cb(darknet_ros_msgs::BoundingBoxes msg);
 };  

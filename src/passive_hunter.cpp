@@ -4,8 +4,8 @@
  * running on a new robot platform, but may not be high scoring, depending on the 
  * current actions of the robot.
  *
- * At this time YOLO is required for image / class detection, and only IMAGE tasks 
- * are supported.
+ * At this time only YOLO has been tested for image / class detection, though others
+ * should work with minimal or no modification
  *
  * Author Maxwell Svetlik, 2021
  *
@@ -13,6 +13,7 @@
 
 #include <algorithm>
 #include <darknet_ros_msgs/BoundingBox.h>
+#include <ros/package.h>
 #include <scavenger_hunt_msgs/Proof.h>
 #include <string>
 
@@ -56,7 +57,43 @@ sensor_msgs::Image PassiveHunter::perform_image_task(scavenger_hunt_msgs::Task t
 	return sensor_msgs::Image();
 }
 
+/*
+ * Record images to scratch directory, then assemble them
+ * into a video. Returns path to video.
+ */
 std::string PassiveHunter::perform_video_task(scavenger_hunt_msgs::Task task) const { 
+	float video_duration = 5; // seconds. In practice, this should change depending on the task
+	int frame_rate = 10;
+	_video_classes.clear();
+	load_classes(task);
+	ros::Rate r(frame_rate);
+	ROS_INFO("Performing a Video task");
+	while(ros::ok()){
+		for(darknet_ros_msgs::BoundingBox bb : _bb_msg.bounding_boxes){
+			/*
+			 * Note that *what* triggers the video is dependent on the task. For now 
+			 * the video starts once an image containing an object is found. 
+			 */
+			if (std::find(_video_classes.begin(), _video_classes.end(), bb.Class) != _video_classes.end()){
+				std::string scratch_path = ros::package::getPath("scavenger_interface") + "/img_temp/";
+				int counter = 1000;
+				ros::Time video_start = ros::Time::now();
+				while( ros::Time::now() - video_start < ros::Duration(video_duration)){
+					write_image(_rgb_image_msg, scratch_path + "frame" + std::to_string(counter) + ".jpg");
+					counter += 1;
+					r.sleep();
+					ros::spinOnce();
+				}
+				
+				// Create video file
+				std::string cmd = "ffmpeg -framerate " + std::to_string(frame_rate) + " -i " + scratch_path + "frame1%03d.jpg -c:v libx264 -profile:v high -crf 20 -pix_fmt yuv420p -y " + scratch_path + "scavenger_output.mp4";
+				int success = system(cmd.c_str());
+				return scratch_path + "scavenger_output.mp4";
+			}
+		}
+		r.sleep();
+		ros::spinOnce();
+	}
 	return "";
 }
 
@@ -79,6 +116,15 @@ void PassiveHunter::load_classes(scavenger_hunt_msgs::Task task) const {
 	}
 }
 
+void PassiveHunter::write_image(sensor_msgs::Image image, std::string path) const {
+	cv_bridge::CvImagePtr cv_ptr;
+	cv_ptr = cv_bridge::toCvCopy(image, sensor_msgs::image_encodings::BGR8);
+	cv::Mat image_raw = cv_ptr->image;
+	bool result = cv::imwrite(path, image_raw);
+	if(!result){
+		ROS_WARN("Image not written to disk at %s while preparing for scavenger video.", path.c_str());
+	}
+}
 
 void PassiveHunter::rgb_image_cb(sensor_msgs::Image msg){
 	_rgb_image_msg = msg;
