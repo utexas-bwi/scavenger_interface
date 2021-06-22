@@ -1,9 +1,15 @@
 # scavenger_interface
-An interface to simplify connecting and interacting with the Scavenger Hunt Challenge : https://scavenger-hunt.cs.utexas.edu
+An interface to simplify connecting and interacting with the [Scavenger Hunt Challenge](https://scavenger-hunt.cs.utexas.edu) introduced in the paper 
+```
+Harel Yedidsion, Jennifer Suriadinata, Zifan Xu, Stefan Debruyn, and Peter Stone. "A Scavenger Hunt for Service Robots" International Conference on Robotics and Autonmation (ICRA). 2021
+```
 
 # Installation
-This repo depends on the [scavenger_hunt_api](https://github.com/utexas-bwi/scavenger_hunt_api) repository. 
+This repo depends on the [scavenger_hunt_api](https://github.com/utexas-bwi/scavenger_hunt_api) and [darknet_ros](https://github.com/leggedrobotics/darknet_ros.git) repositories.
+If neither of these are already installed locally: 
 In the src of a catkin workspace, 
+
+`$ git clone https://github.com/leggedrobotics/darknet_ros.git --recursive`
 
 `$ git clone https://github.com/utexas-bwi/scavenger_hunt_api.git --recursive`
 
